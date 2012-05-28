@@ -1,0 +1,14 @@
+  <p>
+    <%= label :post, :title %><br>
+    <%= text_field :post, :title %>
+  </p>
+  <% i = 1%>
+  <% get_parts(@post).each do |p| %>
+  <p>
+  	<% id = p.id.blank? ? "#{i}" : "#{i}_#{p.id}" %>
+    <%= label_tag "body_#{id}", "Part#{i}" %><br>
+    <%= text_area_tag "body[#{id}]", p.body, :rows => 4, :cols => 10, :id => "body_#{id}" %>
+  </p>
+  <% i += 1 %>
+  <% end %>
+  <%= render :partial => "parts/add_part_link", :locals => { :i => i} %>

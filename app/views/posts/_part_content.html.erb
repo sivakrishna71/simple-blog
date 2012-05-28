@@ -1,0 +1,11 @@
+<div id="part_content_div">
+    <ol>
+        <% for part in @parts -%>
+        <li>
+            <%= part.body %>
+        </li>
+        <% end -%>
+    </ol>
+<br/>
+<%= will_paginate @parts, :style => 'font-size: small' %>
+</div>

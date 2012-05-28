@@ -1,0 +1,55 @@
+<div align="center">
+<table style="background-color: #CCC;width:95%;font-weight:bold;">
+<% if !@report_pages.blank? %>
+<tr><td align="left" nowrap="nowrap">&nbsp;
+<%= @report_pages.count %> Found
+</td>
+<td align="right" nowrap="nowrap">
+<%= image_tag 'indicator-small.gif', :id => 'form-indicator-page', :style => 'display:none;' %>
+<%
+  action_name = params[:action]
+  controller_name = params[:controller]
+  current = @report_pages.page(params[:page])
+  current_page = @report_pages.page(params[:page])
+  start_number = current_page.number - 2
+  end_number = current_page.number + 2
+  start_number = 1 if start_number <= 0
+  end_number = @report_pages.last.number if end_number > @report_pages.last.number
+
+  html = []
+  html << link_to_remote((1), {:url => { :controller => controller_name, :action => action_name, :page => (1) },
+                                             :method => "get",
+                                             :before => "Element.show('form-indicator-page')" ,
+                                             :success => "Element.hide('form-indicator-page')", :update => { }}, {:class=>"action", :title=>"Go to Page 1"}) unless current_page.number <= 3
+  html << ".." unless current_page.number <= 4
+  start_number.upto(end_number) do |num|
+    if current_page.number == num
+      html << num
+    else
+      html << link_to_remote((num), {:url => {  :controller => controller_name,  :action => action_name, :page => (num) },
+                                             :method => "get",
+                                             :before => "Element.show('form-indicator-page')" ,
+                                             :success => "Element.hide('form-indicator-page')", :update => { }}, {:class=>"action", :title=>"Go to Previous #{num}"})
+    end
+  end
+  html << ".." unless current_page.number >= @report_pages.last.number - 3
+  html <<  link_to_remote((@report_pages.last.number), {:url => {  :controller => controller_name, :action => action_name, :page => (@report_pages.last.number) },
+                                             :before => "Element.show('form-indicator-page')" ,
+                                             :success => "Element.hide('form-indicator-page')",  :update => { }}, {:class=>"action", :title=>"Go to Page #{@report_pages.last.number}"}) unless current_page.number >= @report_pages.last.number - 2
+%>
+
+<%=   link_to_remote "Previous |", {:url => {  :controller => controller_name, :action => action_name, :page => current_page.prev.number },
+                                             :method => "get",
+                                             :before => "Element.show('form-indicator-page')" ,
+                                             :success => "Element.hide('form-indicator-page')", :update => { }}, {:class=>"action", :title=>"Go to Previous Page"} if current_page.prev %>
+<%= html.join(' ') %>
+<%=   link_to_remote "| Next", {:url => {  :controller => controller_name, :action => action_name, :page => current_page.next.number },
+                                             :method => "get",
+                                             :before => "Element.show('form-indicator-page')" ,
+                                             :success => "Element.hide('form-indicator-page')", :update => { }}, {:class=>"action", :title=>"Go to Next Page"} if current_page.next %> &nbsp;
+</td>
+</tr>
+<% end %>
+</table>
+<br/>
+</div>

@@ -1,0 +1,5 @@
+<div id="part-contents">
+<%= link_to_remote "Add part",
+	{:url => { :controller => 'parts', :action => 'add_part', :post_id => @post.id, :i => i }}, {:class => "action"}
+%>
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+    <row class="span8">
+    <ul class="nav nav-tabs">
+        <li class = "<%= (((controller.controller_name == 'posts')) ? 'active' : '') %>">
+            <%= link_to "Home",{:controller => "/"} %>
+        </li>
+        <li class = "<%= (((controller.controller_name == 'dashboard') && (controller.action_name == 'index')) ? 'active' : '') %>">
+            <%= link_to "Details",{:controller => "dashboard", :action => "index"} %>
+        </li>
+        <li class="<%= (((controller.controller_name == 'dashboard') && (controller.action_name == 'contact')) ? 'active' : '') %>">
+            <%= link_to "Contact",{:controller => "dashboard", :action => "contact"} %>
+        </li>
+    </ul>
+</div>
+</div>
+<% if false %>
+<div id="header">
+  <div id="menu">
+    <ul>
+      <li>
+        <%= link_to "Products", products_path, :class => ('active' if request.path == products_path) %>
+      </li>
+      <li>
+        <%= link_to "Blog", blog_path, :class => ('active' if @blog) %>
+      </li>
+      <li>
+        <%= link_to "Contact", contact_path, :class => ('active' if request.path == contact_path) %>
+      </li>
+    </ul>
+  </div>
+  <% end %>
+</div>

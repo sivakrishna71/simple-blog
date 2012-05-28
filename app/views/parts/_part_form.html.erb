@@ -1,0 +1,5 @@
+  <p>
+    <%= label_tag "body_#{i}", "Part#{i}" %><br>
+    <%= text_area_tag "body[#{i}]", nil, :rows => 4, :cols => 10, :id => "body_#{i}" %>
+  </p>
+  <%= render :partial => "parts/add_part_link", :locals => { :i => i+1} %>
